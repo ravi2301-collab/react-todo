@@ -1,5 +1,6 @@
 
 import './App.css';
+import ls from 'local-storage'
 import Card from './components/card';
 import React, { useState, useEffect } from 'react';
 
@@ -9,8 +10,8 @@ function App() {
   const [list, setList] = useState([]);
 
   useEffect(() => {
-    if(localStorage.getItem('list')){
-      const data = JSON.parse (localStorage.getItem('list'))
+    if(ls.get('list')){
+      const data = JSON.parse (ls.get('list'))
       setList(data) 
     }
   },[]);
@@ -21,7 +22,7 @@ function App() {
 
 
   const updateStorage = (param) =>{
-    localStorage.setItem('list', JSON.stringify(param) )
+    ls.set('list', JSON.stringify(param) )
   }
 
   const handleChange = ({target}) => {
