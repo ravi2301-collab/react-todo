@@ -1,12 +1,28 @@
 
 import './App.css';
 import Card from './components/card';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 
 function App() {
   const [input, setInput] = useState('');
   const [list, setList] = useState([]);
+
+  useEffect(() => {
+    if(localStorage.getItem('list')){
+      const data = JSON.parse (localStorage.getItem('list'))
+      setList(data) 
+    }
+  },[]);
+
+  useEffect(() => {
+    updateStorage(list);
+  },[list]);
+
+
+  const updateStorage = (param) =>{
+    localStorage.setItem('list', JSON.stringify(param) )
+  }
 
   const handleChange = ({target}) => {
     setInput(target.value);
@@ -14,6 +30,7 @@ function App() {
 
   const handleDelete = (i) => {
     setList( list.filter((el,index) => index !== i));
+    updateStorage(list);
   }
 
   const handleSubmit = () => {
